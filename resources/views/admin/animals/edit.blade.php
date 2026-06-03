@@ -2,53 +2,62 @@
 
 @section('content')
 
-<div style="max-width:700px; margin:auto; padding:30px;">
+<div style="padding: 1.5rem 2rem;">
 
-    <h1>✏️ Editar animal</h1>
+    <div style="margin-bottom: 2rem;">
+        <p style="font-size: 12px; font-weight: 500; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px;">
+            Panel administrativo
+        </p>
+        <h1 style="font-size: 22px; font-weight: 500; margin: 0;">Editar animal</h1>
+    </div>
 
-    <form method="POST"
-      action="{{ route('admin.animals.update', $animal->id) }}">
+    <div style="max-width: 560px; background: #fff; border: 0.5px solid #e5e5e3; border-radius: 12px; padding: 1.5rem;">
 
-    @csrf
-    @method('PUT')
+        <form method="POST" action="{{ route('admin.animals.update', $animal->id) }}">
+            @csrf
+            @method('PUT')
 
-    <label>Nombre:</label><br>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
 
-    <input type="text"
-           name="name"
-           value="{{ $animal->name }}">
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">
+                        Nombre
+                    </label>
+                    <input type="text" name="name" value="{{ $animal->name }}" style="width: 100%; box-sizing: border-box;">
+                </div>
 
-    <br><br>
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">
+                        Tipo
+                    </label>
+                    <input type="text" name="type" value="{{ $animal->type }}" style="width: 100%; box-sizing: border-box;">
+                </div>
 
-    <label>Tipo:</label><br>
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">
+                        Raza
+                    </label>
+                    <input type="text" name="breed" value="{{ $animal->breed }}" style="width: 100%; box-sizing: border-box;">
+                </div>
 
-    <input type="text"
-           name="type"
-           value="{{ $animal->type }}">
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">
+                        Edad
+                    </label>
+                    <input type="number" name="age" value="{{ $animal->age }}" style="width: 100%; box-sizing: border-box;">
+                </div>
 
-    <br><br>
+            </div>
 
-    <label>Raza:</label><br>
+            <div style="border-top: 0.5px solid #e5e5e3; padding-top: 16px; display: flex; justify-content: flex-end;">
+                <button type="submit" style="padding: 0 20px; height: 36px; font-size: 14px; cursor: pointer; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;">
+                    ✓ Actualizar
+                </button>
+            </div>
 
-    <input type="text"
-           name="breed"
-           value="{{ $animal->breed }}">
+        </form>
 
-    <br><br>
-
-    <label>Edad:</label><br>
-
-    <input type="number"
-           name="age"
-           value="{{ $animal->age }}">
-
-    <br><br>
-
-    <button type="submit">
-        Actualizar
-    </button>
-
-</form>
+    </div>
 
 </div>
 

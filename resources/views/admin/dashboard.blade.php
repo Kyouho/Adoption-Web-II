@@ -1,49 +1,59 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Resumen')
+@section('page-subtitle', 'Vista general del sistema')
+
+@section('header-actions')
+    <a href="{{ route('admin.animals.create') }}"
+       class="px-4 py-2 rounded-lg text-sm font-medium text-white"
+       style="background:#2d6a4f">
+        + Registrar animal
+    </a>
+@endsection
+
 @section('content')
 
-<div style="padding: 30px;">
+<div class="mb-3">
+    <p class="text-sm text-gray-500">Bienvenido, <span class="font-medium text-gray-700">{{ Auth::user()->name }}</span></p>
+</div>
 
-    <h1>🛠️ Panel de administración</h1>
+{{-- Stats --}}
+<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem" class="mb-6">
+    @foreach([
+        ['label' => 'Animales registrados', 'value' => $totalAnimals,         'bg' => 'bg-green-50',  'color' => 'text-green-700'],
+        ['label' => 'Disponibles',           'value' => $availableAnimals,     'bg' => 'bg-green-50',  'color' => 'text-green-700'],
+        ['label' => 'En proceso',            'value' => $inProcessAnimals,     'bg' => 'bg-yellow-50', 'color' => 'text-yellow-700'],
+        ['label' => 'Adoptados',             'value' => $adoptedAnimals,       'bg' => 'bg-gray-50',   'color' => 'text-gray-700'],
+        ['label' => 'Solicitudes totales',   'value' => $totalApplications,    'bg' => 'bg-blue-50',   'color' => 'text-blue-700'],
+        ['label' => 'Pendientes',            'value' => $pendingApplications,  'bg' => 'bg-yellow-50', 'color' => 'text-yellow-700'],
+        ['label' => 'Aprobadas',             'value' => $approvedApplications, 'bg' => 'bg-green-50',  'color' => 'text-green-700'],
+        ['label' => 'Adopciones',            'value' => $totalAdoptions,       'bg' => 'bg-green-50',  'color' => 'text-green-700'],
+    ] as $stat)
+    <div class="{{ $stat['bg'] }} rounded-xl border border-gray-100 p-4 text-center">
+        <p class="font-serif text-3xl font-semibold {{ $stat['color'] }}">{{ $stat['value'] }}</p>
+        <p class="text-xs text-gray-500 mt-1">{{ $stat['label'] }}</p>
+    </div>
+    @endforeach
+</div>
 
-    <p>Bienvenido, {{ Auth::user()->name }}.</p>
-
-    <hr>
-
-    <h3>📊 Resumen general</h3>
-
-    <ul>
-        <li>Animales registrados: {{ $totalAnimals }}</li>
-        <li>Animales disponibles: {{ $availableAnimals }}</li>
-        <li>Animales en proceso: {{ $inProcessAnimals }}</li>
-        <li>Animales adoptados: {{ $adoptedAnimals }}</li>
-        <li>Solicitudes totales: {{ $totalApplications }}</li>
-        <li>Solicitudes pendientes: {{ $pendingApplications }}</li>
-        <li>Solicitudes aprobadas: {{ $approvedApplications }}</li>
-        <li>Adopciones realizadas: {{ $totalAdoptions }}</li>
-        <li>Usuarios adoptantes: {{ $totalUsers }}</li>
-    </ul>
-
-    <hr>
-
-    <h3>🚀 Accesos rápidos</h3>
-
-    <a href="{{ route('admin.animals') }}">
-        <button>Gestionar animales</button>
-    </a>
-
-    <a href="{{ route('admin.applications') }}">
-        <button>Ver solicitudes</button>
-    </a>
-
-    <a href="{{ route('admin.reports') }}">
-        <button>Ver reportes</button>
-    </a>
-
-    <a href="{{ route('admin.users') }}">
-        <button>Ver usuarios</button>
-    </a>
-
+{{-- Accesos rápidos --}}
+<div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100">
+        <h2 class="text-sm font-medium text-gray-900">Accesos rápidos</h2>
+    </div>
+    <div class="p-4 flex flex-wrap gap-3">
+        @foreach([
+            ['route' => 'admin.animals',      'label' => 'Gestionar animales'],
+            ['route' => 'admin.applications', 'label' => 'Ver solicitudes'],
+            ['route' => 'admin.reports',      'label' => 'Ver reportes'],
+            ['route' => 'admin.users',        'label' => 'Ver usuarios'],
+        ] as $link)
+        <a href="{{ route($link['route']) }}"
+           class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors">
+            {{ $link['label'] }}
+        </a>
+        @endforeach
+    </div>
 </div>
 
 @endsection
