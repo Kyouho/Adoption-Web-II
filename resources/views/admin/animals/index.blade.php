@@ -4,9 +4,8 @@
 @section('page-subtitle', 'Gestión del catálogo de animales')
 
 @section('header-actions')
-    <a href="{{ route('admin.animals.create') }}"
-       style="display:inline-block; padding:.5rem 1.25rem; border-radius:10px; font-size:.875rem; font-weight:500; color:#fff; background:#2d6a4f; text-decoration:none">
-        + Registrar animal
+    <a href="{{ route('admin.animals.create') }}">
+        <button>➕ Registrar animal</button>
     </a>
 @endsection
 
