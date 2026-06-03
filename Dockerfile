@@ -20,8 +20,7 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 10000
 
-CMD cp .env.example .env && \
-    php artisan config:clear && \
+CMD php artisan config:clear && \
     php artisan migrate --force && \
     php artisan storage:link && \
     php artisan serve --host=0.0.0.0 --port=10000
