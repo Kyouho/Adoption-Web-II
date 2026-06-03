@@ -22,6 +22,7 @@ EXPOSE 10000
 
 CMD cp .env.example .env && \
     php artisan key:generate --force && \
+    php artisan config:clear && \
     php artisan migrate --force && \
     php artisan storage:link && \
     php artisan serve --host=0.0.0.0 --port=10000
