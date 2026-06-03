@@ -55,8 +55,8 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-  Route::get('/dashboard', [UserDashboardController::class, 'index'])
-    ->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])
+        ->name('dashboard');
 
     Route::view('/profile', 'user.profile')
         ->name('profile');
@@ -76,10 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/apply/{id}', [ApplicationController::class, 'apply'])
         ->name('apply');
 
-        Route::post('/apply/{id}', [
-    ApplicationController::class,
-    'store'
-])->name('apply.store');
+    Route::post('/apply/{id}', [
+        ApplicationController::class,
+        'store'
+    ])->name('apply.store');
 
 });
 
@@ -93,105 +93,105 @@ Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard admin
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Dashboard admin
+        |--------------------------------------------------------------------------
+        */
 
- Route::get('/', [AdminDashboardController::class, 'index'])
-    ->name('admin.dashboard');
-    /*
-    |--------------------------------------------------------------------------
-    | CRUD animales
-    |--------------------------------------------------------------------------
-    */
+        Route::get('/', [AdminDashboardController::class, 'index'])
+            ->name('admin.dashboard');
+        /*
+        |--------------------------------------------------------------------------
+        | CRUD animales
+        |--------------------------------------------------------------------------
+        */
 
-    Route::prefix('animals')->group(function () {
+        Route::prefix('animals')->group(function () {
 
-        Route::get('/', [AdminAnimalController::class, 'index'])
-            ->name('admin.animals');
+            Route::get('/', [AdminAnimalController::class, 'index'])
+                ->name('admin.animals');
 
-        Route::get('/create', [AdminAnimalController::class, 'create'])
-            ->name('admin.animals.create');
+            Route::get('/create', [AdminAnimalController::class, 'create'])
+                ->name('admin.animals.create');
 
-        Route::post('/', [AdminAnimalController::class, 'store'])
-            ->name('admin.animals.store');
+            Route::post('/', [AdminAnimalController::class, 'store'])
+                ->name('admin.animals.store');
 
-        Route::get('/{id}', [AdminAnimalController::class, 'show'])
-            ->name('admin.animals.show');
+            Route::get('/{id}', [AdminAnimalController::class, 'show'])
+                ->name('admin.animals.show');
 
-        Route::get('/{id}/edit', [AdminAnimalController::class, 'edit'])
-            ->name('admin.animals.edit');
+            Route::get('/{id}/edit', [AdminAnimalController::class, 'edit'])
+                ->name('admin.animals.edit');
 
-        Route::put('/{id}', [AdminAnimalController::class, 'update'])
-            ->name('admin.animals.update');
+            Route::put('/{id}', [AdminAnimalController::class, 'update'])
+                ->name('admin.animals.update');
 
-        Route::delete('/{id}', [AdminAnimalController::class, 'destroy'])
-            ->name('admin.animals.destroy');
+            Route::delete('/{id}', [AdminAnimalController::class, 'destroy'])
+                ->name('admin.animals.destroy');
+
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Solicitudes admin
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/applications', [
+            AdminApplicationController::class,
+            'index'
+        ])->name('admin.applications');
+
+        Route::get('/applications/{id}', [
+            AdminApplicationController::class,
+            'show'
+        ])->name('admin.applications.show');
+
+        Route::post('/applications/{id}/approve', [
+            AdminApplicationController::class,
+            'approve'
+        ])->name('admin.applications.approve');
+
+        Route::post('/applications/{id}/reject', [
+            AdminApplicationController::class,
+            'reject'
+        ])->name('admin.applications.reject');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reportes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/reports', [
+            ReportController::class,
+            'index'
+        ])->name('admin.reports');
+
+        Route::get('/reports/adoptions', [
+            ReportController::class,
+            'adoptions'
+        ])->name('admin.reports.adoptions');
+
+        Route::get('/stats', [
+            ReportController::class,
+            'stats'
+        ])->name('admin.stats');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Configuración
+        |--------------------------------------------------------------------------
+        */
+
+        Route::view('/settings', 'admin.settings')
+            ->name('admin.settings');
+
+        Route::get('/users', [AdminUserController::class, 'index'])
+            ->name('admin.users');
 
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Solicitudes admin
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/applications', [
-        AdminApplicationController::class,
-        'index'
-    ])->name('admin.applications');
-
-    Route::get('/applications/{id}', [
-        AdminApplicationController::class,
-        'show'
-    ])->name('admin.applications.show');
-
-    Route::post('/applications/{id}/approve', [
-    AdminApplicationController::class,
-    'approve'
-])->name('admin.applications.approve');
-
-Route::post('/applications/{id}/reject', [
-    AdminApplicationController::class,
-    'reject'
-])->name('admin.applications.reject');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Reportes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/reports', [
-        ReportController::class,
-        'index'
-    ])->name('admin.reports');
-
-    Route::get('/reports/adoptions', [
-        ReportController::class,
-        'adoptions'
-    ])->name('admin.reports.adoptions');
-
-    Route::get('/stats', [
-        ReportController::class,
-        'stats'
-    ])->name('admin.stats');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Configuración
-    |--------------------------------------------------------------------------
-    */
-
-    Route::view('/settings', 'admin.settings')
-        ->name('admin.settings');
-
-  Route::get('/users', [AdminUserController::class, 'index'])
-    ->name('admin.users');
-
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -218,10 +218,18 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::get('/debug-env', function () {
+    return [
+        'DB_HOST' => env('DB_HOST'),
+        'DB_DATABASE' => env('DB_DATABASE'),
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+    ];
+});
+
 /*
 |--------------------------------------------------------------------------
 | Auth Breeze
 |--------------------------------------------------------------------------
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
